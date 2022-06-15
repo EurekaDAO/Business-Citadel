@@ -13,10 +13,14 @@
 //CREDTIS: Huge shout out to Jacob at Emerald City DAO for the cadence bootcamp! A good
 // portion of the initial contracts are based of his contracts for FLOATS
 
-import NonFungibleToken from "../core-contracts/NonFungibleToken.cdc"
-import MetadataViews from "../core-contracts/MetadataViews.cdc"
-import FungibleToken from "../core-contracts/FungibleToken.cdc"
-import FlowToken from "../core-contracts/FlowToken.cdc"
+import NonFungibleToken from 0xf8d6e0586b0a20c7
+import MetadataViews from 0xf8d6e0586b0a20c7
+import FungibleToken from 0xee82856bf20e2aa6
+import FlowToken from 0xf8d6e0586b0a20c7
+// import NonFungibleToken from "../core-contracts/NonFungibleToken.cdc"
+// import MetadataViews from "../core-contracts/MetadataViews.cdc"
+// import FungibleToken from "../core-contracts/FungibleToken.cdc"
+// import FlowToken from "../core-contracts/FlowToken.cdc"
 
 pub contract BusinessCitadelCore: NonFungibleToken {
     /***********************************************/
