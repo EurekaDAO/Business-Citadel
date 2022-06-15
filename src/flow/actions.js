@@ -13,7 +13,23 @@ if(browser) {
 
 // Lifecycle FCL Auth functions
 export const unauthenticate = () => fcl.unauthenticate()
-export const logIn = () => fcl.logIn()
+export const logIn = async () => {
+  let res = await fcl.authenticate();
+
+  const accountProofService = res.services.find(services => services.type === 'account-proof' );
+
+  if (accountProofService) {
+    // const response = await fetch('/api/verify', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(accountProofService.data)
+    // })
+
+    // const verified = await response.json();
+    const verified = JSON.parse("{ verified }");
+    console.log(verified);
+  }
+}
 export const signUp = () => fcl.signUp()
 
 // init account
@@ -24,17 +40,17 @@ export const initAccount = async () => {
   try {
     transactionId = await fcl.mutate({
       cadence: `
-        import Profile from 0xProfile
+        import EmployeeProfile from 0xProfile
 
         transaction {
           prepare(account: AuthAccount) {
             // Only initialize the account if it hasn't already been initialized
-            if (!Profile.check(account.address)) {
+            if (!EmployeeProfile.check(account.address)) {
               // This creates and stores the profile in the user's account
-              account.save(<- Profile.new(), to: Profile.privatePath)
+              account.save(<- EmployeeProfile.new(), to: EmployeeProfile.privatePath)
 
               // This creates the public capability that lets applications read the profile's info
-              account.link<&Profile.Base{Profile.Public}>(Profile.publicPath, target: Profile.privatePath)
+              account.link<&EmployeeProfile.Base{EmployeeProfile.Public}>(EmployeeProfile.publicPath, target: EmployeeProfile.privatePath)
             }
           }
         }
@@ -67,10 +83,10 @@ export const sendQuery = async (addr) => {
   try {
     profileQueryResult = await fcl.query({
       cadence: `
-        import Profile from 0xProfile
+        import EmployeeProfile from 0xProfile
   
-        pub fun main(address: Address): Profile.ReadOnly? {
-          return Profile.read(address)
+        pub fun main(address: Address): EmployeeProfile.ReadOnly? {
+          return EmployeeProfile.read(address)
         }
       `,
       args: (arg, t) => [arg(addr, t.Address)]
@@ -88,20 +104,20 @@ export const executeTransaction = async () => {
   try {
     const transactionId = await fcl.mutate({
       cadence: `
-        import Profile from 0xProfile
+        import EmployeeProfile from 0xProfile
   
         transaction(name: String, color: String, info: String) {
           prepare(account: AuthAccount) {
             account
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+              .borrow<&EmployeeProfile.Base{EmployeeProfile.Owner}>(from: EmployeeProfile.privatePath)!
               .setName(name)
 
             account
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+              .borrow<&EmployeeProfile.Base{EmployeeProfile.Owner}>(from: EmployeeProfile.privatePath)!
               .setInfo(info)
 
             account
-              .borrow<&Profile.Base{Profile.Owner}>(from: Profile.privatePath)!
+              .borrow<&EmployeeProfile.Base{EmployeeProfile.Owner}>(from: EmployeeProfile.privatePath)!
               .setColor(color)
           }
         }

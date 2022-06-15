@@ -1,0 +1,31 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"
+		}
+	},
+	"contracts": {
+		"EmployeeProfile": "./cadence/contracts/EmployeeProfile.cdc"
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "0xf8d6e0586b0a20c7",
+			"key": "f56ad95b5f202f82d700dbf67af475b776d8c92e750cef8250a9f5e09cb64be4"
+		},
+		"emulator-business-citadel": {
+			"address": "0x01cf0e2f2f715450",
+			"key": "cb1379241b19baa3f407975dd20327edf82272888faa70e73334f34ea106a8d4"
+		}
+	},
+	"deployments": {
+		"emulator": {
+			"emulator-business-citadel": ["EmployeeProfile"]
+		}
+	}
+}
