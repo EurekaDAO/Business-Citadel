@@ -2,12 +2,9 @@
 import { httpsCallable } from "firebase/functions";
 import { functions } from '../firebase/firebaseConfig';
 
-const createNonce = httpsCallable(functions, 'createNonce');
+const createNonce = httpsCallable(functions, 'api-nonce-createNonce');
 
 export const resolver = async () => {
     const response = await createNonce()
-    return {
-        appIdentifier: "Awesome App",
-        nonce: response.data.nonce
-    }
+    return response.data
 }
