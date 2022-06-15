@@ -1,4 +1,5 @@
 const functions = require("firebase-functions");
+const crypto = require("crypto");
 
 let front_endServer;
 exports.front_end = functions.region("us-central1").https.onRequest(async (request, response) => {
@@ -9,4 +10,11 @@ exports.front_end = functions.region("us-central1").https.onRequest(async (reque
     }
     functions.logger.info("Requested resource: " + request.originalUrl);
     return front_endServer(request, response);
+});
+
+// Create NONCE for FCL Login
+exports.createNonce = functions.https.onCall((data, context) => {
+    return {
+        nonce: crypto.randomBytes(32).toString('hex')
+    }
 });

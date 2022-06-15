@@ -4,6 +4,8 @@ import { get } from 'svelte/store';
 import * as fcl from "@onflow/fcl";
 import "./config";
 import { user, profile, transactionStatus, transactionInProgress, txId } from './stores';
+//firebase
+import {auth, db, functions} from '../firebase/firebaseConfig';
 
 if(browser) {
   // set Svelte $user store to currentUser, 
@@ -26,7 +28,7 @@ export const logIn = async () => {
     // })
 
     // const verified = await response.json();
-    const verified = JSON.parse("{ verified }");
+    const verified = "{ verified }";
     console.log(verified);
   }
 }

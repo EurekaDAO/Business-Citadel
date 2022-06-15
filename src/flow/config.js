@@ -1,9 +1,5 @@
 import { config } from "@onflow/config";
-
-const resolver = async () => ({
-  appIdentifier: "Awesome App (v0.0)",
-  nonce: "3037366134636339643564623330316636626239323161663465346131393662",
-})
+import { resolver } from "../firebase/nonceResolver";
 
 config({
   "app.detail.title": "Business Citadel", // Shows user what dapp is trying to connect

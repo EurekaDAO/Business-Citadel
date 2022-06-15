@@ -1,0 +1,1 @@
+export const PAGE_TITLE_EXTENSION = '| BusinessCitadel by Eureka DAO'

@@ -6,7 +6,40 @@
 		}
 	},
 	"contracts": {
-		"EmployeeProfile": "./cadence/contracts/EmployeeProfile.cdc"
+		"FungibleToken": {
+			"source": "./cadence/contracts/core-contracts/FungibleToken.cdc",
+			"aliases": {
+			  "emulator": "0xee82856bf20e2aa6",
+			  "testnet": "0x9a0766d93b6608b7",
+			  "mainnet": "0xf233dcee88fe0abe"
+			}
+		},
+		"FlowToken": {
+			"source": "./cadence/contracts/core-contracts/FlowToken.cdc",
+			"aliases": {
+			  "emulator": "0xee82856bf20e2aa6",
+			  "testnet": "0x9a0766d93b6608b7",
+			  "mainnet": "0xf233dcee88fe0abe"
+			}
+		},
+		"NonFungibleToken": {
+			"source": "./cadence/contracts/core-contracts/NonFungibleToken.cdc",
+			"aliases": {
+			  "emulator": "0xee82856bf20e2aa6",
+			  "testnet": "0x9a0766d93b6608b7",
+			  "mainnet": "0xf233dcee88fe0abe"
+			}
+		},
+		"MetadataViews": {
+			"source": "./cadence/contracts/core-contracts/MetadataViews.cdc",
+			"aliases": {
+			  "emulator": "0xee82856bf20e2aa6",
+			  "testnet": "0x9a0766d93b6608b7",
+			  "mainnet": "0xf233dcee88fe0abe"
+			}
+		},
+		"EmployeeProfile": "./cadence/contracts/EmployeeProfile.cdc",
+		"BusinessCitadelCore": "./cadence/contracts/business-citadel/BusinessCitadelCore.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -20,12 +53,12 @@
 		},
 		"emulator-business-citadel": {
 			"address": "0x01cf0e2f2f715450",
-			"key": "cb1379241b19baa3f407975dd20327edf82272888faa70e73334f34ea106a8d4"
+			"key": "749b3de7f2c6c735730668ff913692d84f7d6ffea74f67070d2b5163e78c89d2"
 		}
 	},
 	"deployments": {
 		"emulator": {
-			"emulator-business-citadel": ["EmployeeProfile"]
+			"emulator-business-citadel": ["EmployeeProfile", "BusinessCitadelCore"]
 		}
 	}
 }

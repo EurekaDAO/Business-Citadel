@@ -16,5 +16,8 @@
     "svelte": "^3.48.0",
     "svelte-adapter-firebase": "https://github.com/BoiseITGuru/svelte-adapter-firebase.git"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "firebase": "^9.8.3"
+  }
 }
