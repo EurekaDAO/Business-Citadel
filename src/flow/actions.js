@@ -5,7 +5,8 @@ import * as fcl from "@onflow/fcl";
 import "./config";
 import { user, profile, transactionStatus, transactionInProgress, txId } from './stores';
 //firebase
-import {auth, db, functions} from '../firebase/firebaseConfig';
+import { httpsCallable } from "firebase/functions";
+import { functions } from '../firebase/firebaseConfig';
 
 if(browser) {
   // set Svelte $user store to currentUser, 
@@ -21,15 +22,11 @@ export const logIn = async () => {
   const accountProofService = res.services.find(services => services.type === 'account-proof' );
 
   if (accountProofService) {
-    // const response = await fetch('/api/verify', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(accountProofService.data)
-    // })
+    const verifyNonce = httpsCallable(functions, 'api-nonce-verifyNonce');
 
-    // const verified = await response.json();
-    const verified = "{ verified }";
-    console.log(verified);
+    const response = await verifyNonce({ accountProof: accountProofService.data })
+
+    console.log(response);
   }
 }
 export const signUp = () => fcl.signUp()
