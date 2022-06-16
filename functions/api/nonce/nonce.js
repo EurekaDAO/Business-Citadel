@@ -52,13 +52,15 @@ exports.verifyNonce = functions.https.onCall(async (data, context) => {
             const validProof = true
 
             if (validProof) {
+                nonce.ref.delete()
                 const token = await auth.createCustomToken(data.accountProof.address)
                 return {
-                    nonceValid: true,
+                    sucess: true,
                     token: token
                 }
             } else {
                 return {
+                    sucess: false,
                     nonceValid: false
                 }
             }
@@ -66,7 +68,7 @@ exports.verifyNonce = functions.https.onCall(async (data, context) => {
     } catch (error) {
         console.log(error);
         return {
-            error: true,
+            sucess: false,
             errorMessage: error.message
         }
     }

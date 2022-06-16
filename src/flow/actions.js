@@ -6,7 +6,8 @@ import "./config";
 import { user, profile, transactionStatus, transactionInProgress, txId } from './stores';
 //firebase
 import { httpsCallable } from "firebase/functions";
-import { functions } from '../firebase/firebaseConfig';
+import { signInWithCustomToken, signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, functions } from '../firebase/firebaseConfig';
 
 if(browser) {
   // set Svelte $user store to currentUser, 
@@ -14,8 +15,35 @@ if(browser) {
   fcl.currentUser.subscribe(user.set, [])
 }
 
-// Lifecycle FCL Auth functions
-export const unauthenticate = () => fcl.unauthenticate()
+// Lifecycle FCL/Firebase Auth functions
+onAuthStateChanged(auth, (firebaseUser) => {
+  if (firebaseUser) {
+    // User is signed into firebase check if logged into FCL account
+    // if (!user?.loggedIn) {
+    //   try {
+    //     signOut(auth)
+    //     console.log("signed out of firebase account")
+    //   } catch (error) {
+    //     // TODO: handle error
+    //     console.log(error);
+    //   }
+    // }
+    console.log(user)
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+export const unauthenticate = () => {
+  try {
+    signOut(auth)
+    console.log("signed out of firebase account")
+  } catch (error) {
+    // TODO: handle error
+    console.log(error);
+  }
+  fcl.unauthenticate()
+}
 export const logIn = async () => {
   let res = await fcl.authenticate();
 
@@ -26,7 +54,25 @@ export const logIn = async () => {
 
     const response = await verifyNonce({ accountProof: accountProofService.data })
 
-    console.log(response);
+    if (response.data.sucess) {
+      try {
+        const userCredential = await signInWithCustomToken(auth, response.data.token)
+
+        // TODO: Complete some further sign in functions and/or trigger listners
+      } catch (error) {
+        
+      }
+    } else {
+      if (response.data.errorMessage) {
+        // TODO: handle error message
+        console.log(response.data.errorMessage)
+        unauthenticate()
+      } else {
+        // TODO: handle invalid NONCE response
+        console.log("Invalid NONCE response")
+        unauthenticate()
+      }
+    }
   }
 }
 export const signUp = () => fcl.signUp()
