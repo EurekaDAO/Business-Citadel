@@ -28,7 +28,7 @@ onAuthStateChanged(auth, (firebaseUser) => {
     //     console.log(error);
     //   }
     // }
-    console.log(user)
+    console.log(user?.loggedIn)
   } else {
     // User is signed out
     // ...
